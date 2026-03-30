@@ -1,8 +1,7 @@
 import os
 import fitz  # PyMuPDF
 import google.generativeai as genai
-from chromadb import Client
-from chromadb.config import Settings
+import chromadb
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -10,11 +9,9 @@ load_dotenv()
 # Configure Gemini
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-# Initialize Chroma
-chroma_client = Client(Settings(
-    persist_directory=os.getenv("CHROMA_PERSIST_DIR", "./chroma_db"),
-    anonymized_telemetry=False
-))
+# Initialize Chroma with persistent client
+CHROMA_DIR = os.getenv("CHROMA_PERSIST_DIR", "./chroma_db")
+chroma_client = chromadb.PersistentClient(path=CHROMA_DIR)
 
 # Get or create collection
 collection = chroma_client.get_or_create_collection(
@@ -85,10 +82,13 @@ def ingest_pdf(pdf_path: str, filename: str):
         )
     
     print(f"✓ Ingested {filename}")
+    print(f"✓ Data persisted to {CHROMA_DIR}")
     return len(chunks)
 
-# Add this at the bottom temporarily
 if __name__ == "__main__":
-    # Download a sample SPPU syllabus PDF or use any PDF
+    # Test ingestion
     test_pdf = "./data/syllabi/sample.pdf"
-    ingest_pdf(test_pdf, "sample.pdf")
+    if os.path.exists(test_pdf):
+        ingest_pdf(test_pdf, "sample.pdf")
+    else:
+        print(f"Error: {test_pdf} not found")
