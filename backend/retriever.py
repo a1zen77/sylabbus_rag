@@ -48,7 +48,7 @@ def retrieve_context(query: str, top_k: int = 5) -> list[dict]:
 
 if __name__ == "__main__":
     # Test the retriever
-    test_query = "What are the course objectives?"
+    test_query = "What is covered in Unit 1?"
     print(f"Question: {test_query}\n")
     
     results = retrieve_context(test_query)
