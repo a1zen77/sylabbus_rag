@@ -1,14 +1,10 @@
 import os
-import time
-import google.generativeai as genai
+import ollama
 from dotenv import load_dotenv
 
 load_dotenv()
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel('gemini-2.0-flash')
-
-def truncate_context(contexts: list[dict], max_chars_per_chunk: int = 500) -> list[dict]:
+def truncate_context(contexts: list[dict], max_chars_per_chunk: int = 600) -> list[dict]:
     """Truncate each chunk to save tokens."""
     truncated = []
     for ctx in contexts:
@@ -26,44 +22,60 @@ def build_prompt(query: str, contexts: list[dict]) -> str:
         for ctx in contexts
     ])
     
-    prompt = f"""Answer using only the context below. If info is missing, say "I don't have enough information."
+    prompt = f"""Answer the question using ONLY the context below. Be concise and precise.
 
 Context:
 {context_text}
 
 Question: {query}
 
+If the context doesn't contain the answer, respond with: "I don't have enough information."
+
 Answer:"""
     
     return prompt
 
-def generate_answer(query: str, contexts: list[dict], max_retries: int = 3) -> str:
-    """Generate answer using Gemini with retry logic."""
-    contexts = truncate_context(contexts, max_chars_per_chunk=500)
+def generate_answer(query: str, contexts: list[dict]) -> str:
+    """Generate answer using Ollama."""
+    # Truncate contexts to save tokens
+    contexts = truncate_context(contexts, max_chars_per_chunk=600)
+    
+    # Build prompt
     prompt = build_prompt(query, contexts)
     
-    for attempt in range(max_retries):
-        try:
-            response = model.generate_content(prompt)
-            return response.text
-        except Exception as e:
-            if "429" in str(e) or "quota" in str(e).lower() or "resource_exhausted" in str(e).lower():
-                wait_time = (attempt + 1) * 5
-                print(f"⏳ Rate limit hit. Waiting {wait_time}s... (retry {attempt + 1}/{max_retries})")
-                time.sleep(wait_time)
-            else:
-                raise e
+    try:
+        # Call Ollama
+        response = ollama.chat(
+            model='llama3.2:3b',
+            messages=[
+                {
+                    'role': 'user',
+                    'content': prompt
+                }
+            ],
+            options={
+                'temperature': 0.1,  # Low temperature for factual answers
+                'num_predict': 200,  # Max tokens to generate
+            }
+        )
+        
+        return response['message']['content']
     
-    return "Error: Rate limit exceeded. Please try again later."
+    except Exception as e:
+        print(f"Error calling Ollama: {e}")
+        return f"Error generating answer: {str(e)}"
 
 if __name__ == "__main__":
     from retriever import retrieve_context
     
-    test_query = "What are the course objectives?"
+    test_query = "List the NPTEL courses along with the links recommended in the syllabus."
     print(f"Question: {test_query}\n")
     
-    contexts = retrieve_context(test_query, top_k=3)  # Reduced from 5
+    print("Retrieving relevant chunks...")
+    contexts = retrieve_context(test_query, top_k=3)
     print(f"Found {len(contexts)} chunks\n")
     
+    print("Generating answer with Ollama...")
     answer = generate_answer(test_query, contexts)
+    
     print(f"\nAnswer:\n{answer}")
