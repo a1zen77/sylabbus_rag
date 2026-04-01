@@ -141,7 +141,8 @@ if question := st.chat_input("Ask about the syllabus..."):
     
     # Get answer from API with streaming
     with st.chat_message("assistant"):
-        sources = []
+        # Use a list to store sources (mutable, so it can be modified in generator)
+        sources_container = []
         
         def response_generator():
             """Generator function for streaming response."""
@@ -159,8 +160,9 @@ if question := st.chat_input("Ask about the syllabus..."):
                                 data = json.loads(line[6:])
                                 
                                 if data['type'] == 'sources':
-                                    nonlocal sources
-                                    sources = data['sources']
+                                    # Store sources in the container
+                                    sources_container.clear()
+                                    sources_container.extend(data['sources'])
                                 elif data['type'] == 'token':
                                     yield data['content']
                                 elif data['type'] == 'done':
@@ -176,10 +178,10 @@ if question := st.chat_input("Ask about the syllabus..."):
         # Stream the response
         full_response = st.write_stream(response_generator())
         
-        # Display sources
-        if sources:
+        # Display sources (they're now in sources_container)
+        if sources_container:
             with st.expander("📎 View Sources"):
-                for i, source in enumerate(sources, 1):
+                for i, source in enumerate(sources_container, 1):
                     st.markdown(f"""
                     <div class="source-box">
                         <strong>Source {i}:</strong> {source['filename']}, Page {source['page_number']}<br>
@@ -192,7 +194,7 @@ if question := st.chat_input("Ask about the syllabus..."):
         st.session_state.messages.append({
             "role": "assistant",
             "content": full_response,
-            "sources": sources
+            "sources": sources_container.copy()  # Copy the list
         })
 
 # Footer
