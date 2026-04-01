@@ -36,15 +36,11 @@ Answer:"""
     return prompt
 
 def generate_answer(query: str, contexts: list[dict]) -> str:
-    """Generate answer using Ollama."""
-    # Truncate contexts to save tokens
+    """Generate answer using Ollama (non-streaming)."""
     contexts = truncate_context(contexts, max_chars_per_chunk=600)
-    
-    # Build prompt
     prompt = build_prompt(query, contexts)
     
     try:
-        # Call Ollama
         response = ollama.chat(
             model='llama3.2:3b',
             messages=[
@@ -54,8 +50,8 @@ def generate_answer(query: str, contexts: list[dict]) -> str:
                 }
             ],
             options={
-                'temperature': 0.1,  # Low temperature for factual answers
-                'num_predict': 200,  # Max tokens to generate
+                'temperature': 0.1,
+                'num_predict': 200,
             }
         )
         
@@ -65,17 +61,49 @@ def generate_answer(query: str, contexts: list[dict]) -> str:
         print(f"Error calling Ollama: {e}")
         return f"Error generating answer: {str(e)}"
 
+def generate_answer_stream(query: str, contexts: list[dict]):
+    """Generate answer using Ollama with streaming."""
+    contexts = truncate_context(contexts, max_chars_per_chunk=600)
+    prompt = build_prompt(query, contexts)
+    
+    try:
+        stream = ollama.chat(
+            model='llama3.2:3b',
+            messages=[
+                {
+                    'role': 'user',
+                    'content': prompt
+                }
+            ],
+            options={
+                'temperature': 0.1,
+                'num_predict': 200,
+            },
+            stream=True  # ← Enable streaming
+        )
+        
+        # Yield each chunk as it arrives
+        for chunk in stream:
+            if 'message' in chunk and 'content' in chunk['message']:
+                yield chunk['message']['content']
+    
+    except Exception as e:
+        yield f"Error generating answer: {str(e)}"
+
 if __name__ == "__main__":
     from retriever import retrieve_context
     
-    test_query = "List the NPTEL courses along with the links recommended in the syllabus."
+    test_query = "What are the course objectives?"
     print(f"Question: {test_query}\n")
     
     print("Retrieving relevant chunks...")
     contexts = retrieve_context(test_query, top_k=3)
     print(f"Found {len(contexts)} chunks\n")
     
-    print("Generating answer with Ollama...")
-    answer = generate_answer(test_query, contexts)
+    print("Generating answer with streaming...")
+    print("Answer: ", end="", flush=True)
     
-    print(f"\nAnswer:\n{answer}")
+    for chunk in generate_answer_stream(test_query, contexts):
+        print(chunk, end="", flush=True)
+    
+    print("\n")
