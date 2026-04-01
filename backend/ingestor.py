@@ -19,34 +19,52 @@ collection = chroma_client.get_or_create_collection(
     metadata={"hnsw:space": "cosine"}
 )
 
-def extract_text_from_pdf(pdf_path: str) -> str:
-    """Extract all text from PDF using PyMuPDF."""
+def extract_text_from_pdf(pdf_path: str) -> list[dict]:
+    """Extract text from PDF, preserving page numbers."""
     doc = fitz.open(pdf_path)
-    text = ""
-    for page in doc:
-        text += page.get_text()
+    pages_data = []
+    
+    for page_num, page in enumerate(doc, start=1):
+        text = page.get_text()
+        if text.strip():  # Only add non-empty pages
+            pages_data.append({
+                "page_number": page_num,
+                "text": text
+            })
+    
     doc.close()
-    return text
+    return pages_data
 
-def chunk_text(text: str, chunk_size: int = 800) -> list[str]:
-    """Split text into chunks of roughly equal size."""
-    words = text.split()
+def chunk_text_with_pages(pages_data: list[dict], chunk_size: int = 800) -> list[dict]:
+    """Split text into chunks while preserving page numbers."""
     chunks = []
-    current_chunk = []
-    current_size = 0
     
-    for word in words:
-        current_chunk.append(word)
-        current_size += len(word) + 1  # +1 for space
+    for page_data in pages_data:
+        page_num = page_data["page_number"]
+        text = page_data["text"]
+        words = text.split()
         
-        if current_size >= chunk_size:
-            chunks.append(" ".join(current_chunk))
-            current_chunk = []
-            current_size = 0
-    
-    # Add remaining words
-    if current_chunk:
-        chunks.append(" ".join(current_chunk))
+        current_chunk = []
+        current_size = 0
+        
+        for word in words:
+            current_chunk.append(word)
+            current_size += len(word) + 1  # +1 for space
+            
+            if current_size >= chunk_size:
+                chunks.append({
+                    "text": " ".join(current_chunk),
+                    "page_number": page_num
+                })
+                current_chunk = []
+                current_size = 0
+        
+        # Add remaining words from this page
+        if current_chunk:
+            chunks.append({
+                "text": " ".join(current_chunk),
+                "page_number": page_num
+            })
     
     return chunks
 
@@ -60,25 +78,30 @@ def embed_text(text: str) -> list[float]:
     return result['embedding']
 
 def ingest_pdf(pdf_path: str, filename: str):
-    """Main ingestion pipeline."""
+    """Main ingestion pipeline with page tracking."""
     print(f"Processing {filename}...")
     
-    # Extract text
-    text = extract_text_from_pdf(pdf_path)
+    # Extract text with page numbers
+    pages_data = extract_text_from_pdf(pdf_path)
+    print(f"Extracted text from {len(pages_data)} pages")
     
-    # Chunk text
-    chunks = chunk_text(text, int(os.getenv("CHUNK_SIZE", 800)))
+    # Chunk text while preserving page numbers
+    chunks = chunk_text_with_pages(pages_data, int(os.getenv("CHUNK_SIZE", 800)))
     print(f"Created {len(chunks)} chunks")
     
     # Embed and store each chunk
-    for i, chunk in enumerate(chunks):
-        embedding = embed_text(chunk)
+    for i, chunk_data in enumerate(chunks):
+        embedding = embed_text(chunk_data["text"])
         
         collection.add(
             ids=[f"{filename}_chunk_{i}"],
             embeddings=[embedding],
-            documents=[chunk],
-            metadatas=[{"filename": filename, "chunk_index": i}]
+            documents=[chunk_data["text"]],
+            metadatas=[{
+                "filename": filename,
+                "chunk_index": i,
+                "page_number": chunk_data["page_number"]  # ← NEW: Store page number
+            }]
         )
     
     print(f"✓ Ingested {filename}")

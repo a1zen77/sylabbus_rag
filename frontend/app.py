@@ -153,12 +153,12 @@ if question := st.chat_input("Ask about the syllabus..."):
                     # Display answer
                     st.markdown(answer)
                     
-                    # Display sources
+                    # Second occurrence (in new message display)
                     with st.expander("📎 View Sources"):
                         for i, source in enumerate(sources, 1):
                             st.markdown(f"""
                             <div class="source-box">
-                                <strong>Source {i}:</strong> {source['filename']} (Chunk {source['chunk_index']})<br>
+                                <strong>Source {i}:</strong> {source['filename']}, Page {source['page_number']}<br>
                                 <strong>Relevance:</strong> {(1 - source['distance']):.2%} match<br>
                                 <em>{source['text_preview']}</em>
                             </div>

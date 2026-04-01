@@ -93,10 +93,11 @@ async def chat(request: ChatRequest):
         # Generate answer
         answer = generate_answer(request.question, contexts)
         
-        # Format sources
+        # Format sources (now with page numbers)
         sources = [
             {
                 "filename": ctx["metadata"]["filename"],
+                "page_number": ctx["metadata"]["page_number"],  # ← NEW
                 "chunk_index": ctx["metadata"]["chunk_index"],
                 "text_preview": ctx["text"][:200] + "..." if len(ctx["text"]) > 200 else ctx["text"],
                 "distance": ctx.get("distance")
