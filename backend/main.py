@@ -8,14 +8,13 @@ from dotenv import load_dotenv
 import json
 
 from ingestor import ingest_pdf
-from retriever import retrieve_context
-from generator import generate_answer, generate_answer_stream  # ← Import streaming version
+from retriever import retrieve_context, check_confidence  # ← Import check_confidence
+from generator import generate_answer, generate_answer_stream
 
 load_dotenv()
 
 app = FastAPI(title="SPPU Syllabus QA API")
 
-# CORS for Streamlit frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -24,16 +23,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Request/Response models
 class ChatRequest(BaseModel):
     question: str
-    stream: bool = False  # ← New parameter
+    stream: bool = False
 
 class ChatResponse(BaseModel):
     answer: str
     sources: list[dict]
+    confident: bool  # ← NEW: Indicate if we're confident
 
-# Routes
 @app.get("/")
 async def root():
     return {
@@ -80,6 +78,8 @@ async def chat(request: ChatRequest):
     """Ask a question and get an answer with sources (non-streaming)."""
     try:
         top_k = int(os.getenv("TOP_K", 5))
+        threshold = float(os.getenv("CONFIDENCE_THRESHOLD", 0.5))
+        
         contexts = retrieve_context(request.question, top_k=top_k)
         
         if not contexts:
@@ -88,7 +88,14 @@ async def chat(request: ChatRequest):
                 detail="No relevant documents found. Please upload syllabus PDFs first."
             )
         
-        answer = generate_answer(request.question, contexts)
+        # Check confidence
+        is_confident = check_confidence(contexts, threshold)
+        
+        # Generate answer (or decline if not confident)
+        if is_confident:
+            answer = generate_answer(request.question, contexts)
+        else:
+            answer = f"I don't have enough information in the provided syllabus to answer this question confidently. The best match I found has a relevance of {(1 - contexts[0]['distance']):.1%}, which is below my confidence threshold of {(1 - threshold):.1%}."
         
         sources = [
             {
@@ -101,7 +108,7 @@ async def chat(request: ChatRequest):
             for ctx in contexts
         ]
         
-        return ChatResponse(answer=answer, sources=sources)
+        return ChatResponse(answer=answer, sources=sources, confident=is_confident)
     
     except HTTPException:
         raise
@@ -113,6 +120,8 @@ async def chat_stream(request: ChatRequest):
     """Ask a question and stream the answer with sources."""
     try:
         top_k = int(os.getenv("TOP_K", 5))
+        threshold = float(os.getenv("CONFIDENCE_THRESHOLD", 0.5))
+        
         contexts = retrieve_context(request.question, top_k=top_k)
         
         if not contexts:
@@ -120,6 +129,9 @@ async def chat_stream(request: ChatRequest):
                 status_code=404,
                 detail="No relevant documents found. Please upload syllabus PDFs first."
             )
+        
+        # Check confidence
+        is_confident = check_confidence(contexts, threshold)
         
         sources = [
             {
@@ -133,12 +145,16 @@ async def chat_stream(request: ChatRequest):
         ]
         
         async def generate():
-            # First, send sources
-            yield f"data: {json.dumps({'type': 'sources', 'sources': sources})}\n\n"
+            # First, send sources and confidence
+            yield f"data: {json.dumps({'type': 'sources', 'sources': sources, 'confident': is_confident})}\n\n"
             
             # Then stream the answer
-            for chunk in generate_answer_stream(request.question, contexts):
-                yield f"data: {json.dumps({'type': 'token', 'content': chunk})}\n\n"
+            if is_confident:
+                for chunk in generate_answer_stream(request.question, contexts):
+                    yield f"data: {json.dumps({'type': 'token', 'content': chunk})}\n\n"
+            else:
+                low_confidence_msg = f"I don't have enough information in the provided syllabus to answer this question confidently. The best match I found has a relevance of {(1 - contexts[0]['distance']):.1%}, which is below my confidence threshold of {(1 - threshold):.1%}."
+                yield f"data: {json.dumps({'type': 'token', 'content': low_confidence_msg})}\n\n"
             
             # Signal end of stream
             yield f"data: {json.dumps({'type': 'done'})}\n\n"

@@ -26,16 +26,13 @@ def embed_query(query: str) -> list[float]:
 
 def retrieve_context(query: str, top_k: int = 5) -> list[dict]:
     """Search Chroma for relevant chunks."""
-    # Convert question to embedding
     query_embedding = embed_query(query)
     
-    # Search ChromaDB
     results = collection.query(
         query_embeddings=[query_embedding],
         n_results=top_k
     )
     
-    # Format results
     contexts = []
     for i in range(len(results['ids'][0])):
         contexts.append({
@@ -46,18 +43,38 @@ def retrieve_context(query: str, top_k: int = 5) -> list[dict]:
     
     return contexts
 
+def check_confidence(contexts: list[dict], threshold: float = 0.5) -> bool:
+    """
+    Check if the best result meets the confidence threshold.
+    Returns True if confident, False if not.
+    """
+    if not contexts:
+        return False
+    
+    # Get the best (lowest) distance
+    best_distance = contexts[0].get("distance", 1.0)
+    
+    # If distance is greater than threshold, we're not confident
+    return best_distance <= threshold
+
 if __name__ == "__main__":
-    # Test the retriever
-    test_query = "What is covered in Unit 1?"
-    print(f"Question: {test_query}\n")
+    test_queries = [
+        "What are the course objectives?",  # Should be confident
+        "What's the professor's email?"      # Should NOT be confident
+    ]
     
-    results = retrieve_context(test_query)
+    threshold = float(os.getenv("CONFIDENCE_THRESHOLD", 0.5))
     
-    print(f"Found {len(results)} relevant chunks:\n")
-    for i, result in enumerate(results, 1):
-        print(f"--- Result {i} ---")
-        print(f"Source: {result['metadata']['filename']}, Chunk: {result['metadata']['chunk_index']}")
-        if result['distance']:
-            print(f"Distance: {result['distance']:.4f}")
-        print(f"Text: {result['text'][:200]}...")
-        print()
+    for query in test_queries:
+        print(f"\nQuestion: {query}")
+        print("="*60)
+        
+        contexts = retrieve_context(query, top_k=5)
+        is_confident = check_confidence(contexts, threshold)
+        
+        print(f"Best match distance: {contexts[0]['distance']:.4f}")
+        print(f"Threshold: {threshold}")
+        print(f"Confident enough to answer? {'YES ✅' if is_confident else 'NO ❌'}")
+        
+        if contexts:
+            print(f"\nTop result: {contexts[0]['text'][:150]}...")
