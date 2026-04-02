@@ -115,6 +115,10 @@ if "messages" not in st.session_state:
 # Display chat history
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
+        # Show confidence warning if applicable
+        if message["role"] == "assistant" and not message.get("confident", True):
+            st.warning("⚠️ Low Confidence Answer")
+        
         st.markdown(message["content"])
         
         # Display sources if available
@@ -123,7 +127,7 @@ for message in st.session_state.messages:
                 for i, source in enumerate(message["sources"], 1):
                     st.markdown(f"""
                     <div class="source-box">
-                        <strong>Source {i}:</strong> {source['filename']} (Chunk {source['chunk_index']})<br>
+                        <strong>Source {i}:</strong> {source['filename']}, Page {source['page_number']}<br>
                         <strong>Relevance:</strong> {(1 - source['distance']):.2%} match<br>
                         <em>{source['text_preview']}</em>
                     </div>
@@ -131,71 +135,76 @@ for message in st.session_state.messages:
 
 # Chat input
 if question := st.chat_input("Ask about the syllabus..."):
-    import json
-    
     # Add user message to chat
     st.session_state.messages.append({"role": "user", "content": question})
     
     with st.chat_message("user"):
         st.markdown(question)
     
-    # Get answer from API with streaming
+    # Get answer from API (non-streaming with confidence)
     with st.chat_message("assistant"):
-        # Use a list to store sources (mutable, so it can be modified in generator)
-        sources_container = []
-        
-        def response_generator():
-            """Generator function for streaming response."""
+        with st.spinner("Thinking..."):
             try:
                 response = requests.post(
-                    f"{API_URL}/chat/stream",
-                    json={"question": question},
-                    stream=True
+                    f"{API_URL}/chat",
+                    json={"question": question}
                 )
                 
                 if response.status_code == 200:
-                    for line in response.iter_lines(decode_unicode=True):
-                        if line and line.startswith('data: '):
-                            try:
-                                data = json.loads(line[6:])
-                                
-                                if data['type'] == 'sources':
-                                    # Store sources in the container
-                                    sources_container.clear()
-                                    sources_container.extend(data['sources'])
-                                elif data['type'] == 'token':
-                                    yield data['content']
-                                elif data['type'] == 'done':
-                                    break
-                            except json.JSONDecodeError:
-                                continue
+                    data = response.json()
+                    answer = data["answer"]
+                    sources = data["sources"]
+                    confident = data.get("confident", True)
+                    
+                    # Display confidence warning if low confidence
+                    if not confident:
+                        st.warning("⚠️ Low Confidence Answer")
+                    
+                    st.markdown(answer)
+                    
+                    # Display sources
+                    if sources:
+                        with st.expander("📎 View Sources"):
+                            for i, source in enumerate(sources, 1):
+                                st.markdown(f"""
+                                <div class="source-box">
+                                    <strong>Source {i}:</strong> {source['filename']}, Page {source['page_number']}<br>
+                                    <strong>Relevance:</strong> {(1 - source['distance']):.2%} match<br>
+                                    <em>{source['text_preview']}</em>
+                                </div>
+                                """, unsafe_allow_html=True)
+                    
+                    # Add to chat history
+                    st.session_state.messages.append({
+                        "role": "assistant",
+                        "content": answer,
+                        "sources": sources,
+                        "confident": confident
+                    })
+                
+                elif response.status_code == 404:
+                    error_msg = "⚠️ No documents found. Please upload a PDF first."
+                    st.warning(error_msg)
+                    st.session_state.messages.append({
+                        "role": "assistant",
+                        "content": error_msg
+                    })
+                
                 else:
-                    yield f"Error: {response.status_code}"
+                    error_msg = f"❌ Error: {response.json().get('detail', 'Unknown error')}"
+                    st.error(error_msg)
+                    st.session_state.messages.append({
+                        "role": "assistant",
+                        "content": error_msg
+                    })
             
             except Exception as e:
-                yield f"Failed to connect to API: {str(e)}"
-        
-        # Stream the response
-        full_response = st.write_stream(response_generator())
-        
-        # Display sources (they're now in sources_container)
-        if sources_container:
-            with st.expander("📎 View Sources"):
-                for i, source in enumerate(sources_container, 1):
-                    st.markdown(f"""
-                    <div class="source-box">
-                        <strong>Source {i}:</strong> {source['filename']}, Page {source['page_number']}<br>
-                        <strong>Relevance:</strong> {(1 - source['distance']):.2%} match<br>
-                        <em>{source['text_preview']}</em>
-                    </div>
-                    """, unsafe_allow_html=True)
-        
-        # Add to chat history
-        st.session_state.messages.append({
-            "role": "assistant",
-            "content": full_response,
-            "sources": sources_container.copy()  # Copy the list
-        })
+                error_msg = f"❌ Failed to connect to API: {str(e)}\n\nMake sure the backend is running at {API_URL}"
+                st.error(error_msg)
+                st.session_state.messages.append({
+                    "role": "assistant",
+                    "content": error_msg
+                })
 
 # Footer
 st.divider()
