@@ -1,0 +1,154 @@
+[
+  {
+    "id": "q1",
+    "question": "What are the prerequisite courses for the Natural Language Processing elective (410252(A))?",
+    "expected_filename": "sample.pdf",
+    "expected_page": 2,
+    "expected_answer_contains": ["Discrete Mathematics", "Theory of Computation", "Data Science and Big Data Analytics"],
+    "category": "easy_factual"
+  },
+  {
+    "id": "q2",
+    "question": "What is the companion course for the Natural Language Processing elective?",
+    "expected_filename": "sample.pdf",
+    "expected_page": 2,
+    "expected_answer_contains": ["Laboratory Practice VI", "410255"],
+    "category": "easy_factual"
+  },
+  {
+    "id": "q3",
+    "question": "How many credits does the Deep Learning course (410251) carry?",
+    "expected_filename": "sample.pdf",
+    "expected_page": 1,
+    "expected_answer_contains": ["03", "Deep Learning", "credit"],
+    "category": "easy_factual"
+  },
+  {
+    "id": "q4",
+    "question": "What is the course code for the Natural Language Processing elective?",
+    "expected_filename": "sample.pdf",
+    "expected_page": 2,
+    "expected_answer_contains": ["410252(A)", "Natural Language Processing"],
+    "category": "easy_factual"
+  },
+  {
+    "id": "q5",
+    "question": "How many marks are allocated for the End-Sem paper in the NLP course examination scheme?",
+    "expected_filename": "sample.pdf",
+    "expected_page": 2,
+    "expected_answer_contains": ["70 Marks", "End-Sem"],
+    "category": "easy_factual"
+  },
+  {
+    "id": "q6",
+    "question": "What is the weekly lecture teaching scheme (hours) for the NLP course?",
+    "expected_filename": "sample.pdf",
+    "expected_page": 2,
+    "expected_answer_contains": ["03 Hours/Week", "TH"],
+    "category": "easy_factual"
+  },
+  {
+    "id": "q7",
+    "question": "Name a textbook recommended for the Natural Language Processing course.",
+    "expected_filename": "sample.pdf",
+    "expected_page": 4,
+    "expected_answer_contains": ["Jurafsky", "Martin", "Speech and Language Processing"],
+    "category": "easy_factual"
+  },
+  {
+    "id": "q8",
+    "question": "What topics are covered under Unit I: Introduction to Natural Language Processing?",
+    "expected_filename": "sample.pdf",
+    "expected_page": 2,
+    "expected_answer_contains": ["Tokenization", "Stemming", "Lemmatization", "Part of Speech Tagging"],
+    "category": "specific_detail"
+  },
+  {
+    "id": "q9",
+    "question": "What modeling and embedding techniques are covered in Unit III: Language Modelling?",
+    "expected_filename": "sample.pdf",
+    "expected_page": 3,
+    "expected_answer_contains": ["N-gram models", "word2vec", "BERT", "LDA"],
+    "category": "specific_detail"
+  },
+  {
+    "id": "q10",
+    "question": "What are the available options for Audit Course 8 (AC8)?",
+    "expected_filename": "sample.pdf",
+    "expected_page": 1,
+    "expected_answer_contains": ["Usability Engineering", "Conversational Interfaces", "Emotional Intelligence"],
+    "category": "specific_detail"
+  },
+  {
+    "id": "q11",
+    "question": "What does Course Outcome CO4 state for the NLP course?",
+    "expected_filename": "sample.pdf",
+    "expected_page": 2,
+    "expected_answer_contains": ["Integrate the NLP techniques", "information retrieval"],
+    "category": "specific_detail"
+  },
+  {
+    "id": "q12",
+    "question": "Which course codes are included under Lab Practice VI?",
+    "expected_filename": "sample.pdf",
+    "expected_page": 1,
+    "expected_answer_contains": ["410252", "410253"],
+    "category": "specific_detail"
+  },
+  {
+    "id": "q13",
+    "question": "Before enrolling in the Natural Language Processing elective, which subjects must a student have already completed?",
+    "expected_filename": "sample.pdf",
+    "expected_page": 2,
+    "expected_answer_contains": ["Discrete Mathematics", "Theory of Computation", "Data Science and Big Data Analytics"],
+    "category": "paraphrased"
+  },
+  {
+    "id": "q14",
+    "question": "How many credit points is the Deep Learning subject worth in the curriculum?",
+    "expected_filename": "sample.pdf",
+    "expected_page": 1,
+    "expected_answer_contains": ["03", "Deep Learning", "credit"],
+    "category": "paraphrased"
+  },
+  {
+    "id": "q15",
+    "question": "In the language modeling unit, what vector representation and topic modeling approaches are taught to students?",
+    "expected_filename": "sample.pdf",
+    "expected_page": 3,
+    "expected_answer_contains": ["N-gram models", "word2vec", "BERT", "LDA"],
+    "category": "paraphrased"
+  },
+  {
+    "id": "q16",
+    "question": "What choices do students have when selecting their eighth audit course?",
+    "expected_filename": "sample.pdf",
+    "expected_page": 1,
+    "expected_answer_contains": ["Usability Engineering", "Conversational Interfaces", "Emotional Intelligence"],
+    "category": "paraphrased"
+  },
+  {
+    "id": "q17",
+    "question": "Who is the faculty member assigned to teach the NLP elective course?",
+    "expected_filename": null,
+    "expected_page": null,
+    "expected_answer_contains": ["don't have enough information"],
+    "category": "out_of_scope"
+  },
+  {
+    "id": "q18",
+    "question": "What is the total course fee for Semester VIII?",
+    "expected_filename": null,
+    "expected_page": null,
+    "expected_answer_contains": ["don't have enough information"],
+    "category": "out_of_scope"
+  },
+  {
+    "id": "q19",
+    "question": "On what date is the mid-semester examination for the NLP course scheduled?",
+    "expected_filename": null,
+    "expected_page": null,
+    "expected_answer_contains": ["don't have enough information"],
+    "category": "out_of_scope"
+  }
+]
