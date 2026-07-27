@@ -64,9 +64,25 @@ def evaluate_single_generation(item: dict, top_k: int = 5, threshold: float = 0.
     }
     
     if is_out_of_scope:
-        # For out-of-scope questions, "correct" means the system refused (low confidence)
-        result["correct_refusal"] = not is_confident
-        result["passed"] = result["correct_refusal"]
+        # "Correct" means the FINAL ANSWER indicates refusal — regardless of
+        # whether that refusal came from the distance threshold or the LLM's
+        # own instruction-following. Check for common refusal phrasing.
+        refusal_phrases = [
+            "don't have enough information",
+            "not enough information",
+            "not explicitly mentioned",
+            "not mentioned",
+            "not stated",
+            "not specified",
+            "no information",
+            "does not contain"
+        ]
+        answer_lower = answer.lower()
+        correctly_refused = any(phrase in answer_lower for phrase in refusal_phrases)
+        
+        result["retrieval_was_confident"] = is_confident  # keep for diagnostics
+        result["correct_refusal"] = correctly_refused
+        result["passed"] = correctly_refused
     else:
         # For answerable questions, "correct" means high keyword match AND system was confident
         result["passed"] = is_confident and keyword_check["match_ratio"] >= 0.5
