@@ -1,15 +1,15 @@
 {
   "total_questions": 19,
-  "overall_pass_rate": 0.7894736842105263,
-  "answerable_pass_rate": 0.75,
+  "overall_pass_rate": 0.9473684210526315,
+  "answerable_pass_rate": 0.9375,
   "refusal_accuracy": 1.0,
-  "avg_keyword_match_ratio": 0.5833333333333334,
+  "avg_keyword_match_ratio": 0.8333333333333334,
   "per_question_results": [
     {
       "id": "q1",
       "question": "What are the prerequisite courses for the Natural Language Processing elective (410252(A))?",
       "category": "easy_factual",
-      "answer": "The prerequisite courses for the Natural Language Processing elective (410252(A)) are:\n\n1. Discrete Mathematics (210241)\n2. Theory of Computation (310242)\n3. Data Science and Big Data Analytics (310251)",
+      "answer": "Discrete Mathematics (210241), Theory of Computation (310242), Data Science and Big Data Analytics (310251).",
       "is_out_of_scope": false,
       "system_was_confident": true,
       "keyword_match_ratio": 1.0,
@@ -57,7 +57,7 @@
       "id": "q4",
       "question": "What is the course code for the Natural Language Processing elective?",
       "category": "easy_factual",
-      "answer": "V 410252(A)",
+      "answer": "V410252(A)",
       "is_out_of_scope": false,
       "system_was_confident": true,
       "keyword_match_ratio": 0.5,
@@ -73,7 +73,7 @@
       "id": "q5",
       "question": "How many marks are allocated for the End-Sem paper in the NLP course examination scheme?",
       "category": "easy_factual",
-      "answer": "The End-Sem (Paper) is allocated 70 marks.",
+      "answer": "The End-Sem (Paper) is allocated 70 Marks.",
       "is_out_of_scope": false,
       "system_was_confident": true,
       "keyword_match_ratio": 1.0,
@@ -88,7 +88,7 @@
       "id": "q6",
       "question": "What is the weekly lecture teaching scheme (hours) for the NLP course?",
       "category": "easy_factual",
-      "answer": "03 Hours/Week",
+      "answer": "03 Hours/Week.",
       "is_out_of_scope": false,
       "system_was_confident": true,
       "keyword_match_ratio": 0.5,
@@ -104,90 +104,89 @@
       "id": "q7",
       "question": "Name a textbook recommended for the Natural Language Processing course.",
       "category": "easy_factual",
-      "answer": "Steven Bird, Ewan Klein, Edward Loper, \u2015Natural Language Processing with Python \u2013 Analyzing Text with the Natural Language Toolkit\u2016, O\u2018Reilly Publication 2.",
+      "answer": "Jurafsky, David, and James H. Martin, \u2015Speech and Language Processing: An Introduction to Natural Language Processing\u2016, Computational Linguistics and Speech Recognition\u2016",
       "is_out_of_scope": false,
       "system_was_confident": true,
-      "keyword_match_ratio": 0.0,
-      "matched_keywords": [],
-      "missing_keywords": [
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
         "Jurafsky",
         "Martin",
         "Speech and Language Processing"
       ],
-      "passed": false
+      "missing_keywords": [],
+      "passed": true
     },
     {
       "id": "q8",
       "question": "What topics are covered under Unit I: Introduction to Natural Language Processing?",
       "category": "specific_detail",
-      "answer": "Unit I: Introduction to Natural Language Processing covers the following topics:\n\n1. Natural Language Processing\n2. Why NLP is hard?\n3. Programming languages Vs Natural Languages\n4. Are natural languages regular?\n5. Finite automata for NLP\n6. Stages of NLP\n7. Challenges and Issues (Open Problems) in NLP",
+      "answer": "Unit I: Introduction to Natural Language Processing covers the following topics:\n\n1. NLP basics\n2. Basics of text processing (Tokenization, Stemming, Lemmatization, Part of Speech Tagging)\n3. Why English is not a regular language\n4. Mapping of Course Outcomes for Unit I (CO1)",
       "is_out_of_scope": false,
       "system_was_confident": true,
-      "keyword_match_ratio": 0.0,
-      "matched_keywords": [],
-      "missing_keywords": [
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
         "Tokenization",
         "Stemming",
         "Lemmatization",
         "Part of Speech Tagging"
       ],
-      "passed": false
+      "missing_keywords": [],
+      "passed": true
     },
     {
       "id": "q9",
       "question": "What modeling and embedding techniques are covered in Unit III: Language Modelling?",
       "category": "specific_detail",
-      "answer": "Probabilistic language modeling, Markov models, Generative models of language, Log-Liner Models, Graph-based Models, N-gram models: Simple n-gram models, Estimation parameters and smoothing, Evaluating language models, Word Embeddings/ Vector Semantics: Bag-of-words, TFIDF, word2vec, doc2vec, Contextualized representations (BERT).",
+      "answer": "Probabilistic language modeling, Markov models, Generative models of language, Log-Liner Models, Graph-based Models, N-gram models: Simple n-gram models, Estimation parameters and smoothing.",
       "is_out_of_scope": false,
       "system_was_confident": true,
-      "keyword_match_ratio": 0.75,
+      "keyword_match_ratio": 0.25,
       "matched_keywords": [
-        "N-gram models",
-        "word2vec",
-        "BERT"
+        "N-gram models"
       ],
       "missing_keywords": [
+        "word2vec",
+        "BERT",
         "LDA"
       ],
-      "passed": true
+      "passed": false
     },
     {
       "id": "q10",
       "question": "What are the available options for Audit Course 8 (AC8)?",
       "category": "specific_detail",
-      "answer": "The available options for Audit Course 8 (AC8) are not explicitly stated in the provided context. However, based on Chunk 2, it can be inferred that there is an Elective V course (410252(A)) and another Elective V course (410253(E)), but no specific details about Audit Course 8 are mentioned.",
+      "answer": "The available options for Audit Course 8 (AC8) are:\n\n1. Usability Engineering\n2. Conversational Interfaces\n3. Social Media and Analytics\n4. MOOC - Learn New Skills\n5. Emotional Intelligence",
       "is_out_of_scope": false,
       "system_was_confident": true,
-      "keyword_match_ratio": 0.0,
-      "matched_keywords": [],
-      "missing_keywords": [
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
         "Usability Engineering",
         "Conversational Interfaces",
         "Emotional Intelligence"
       ],
-      "passed": false
+      "missing_keywords": [],
+      "passed": true
     },
     {
       "id": "q11",
       "question": "What does Course Outcome CO4 state for the NLP course?",
       "category": "specific_detail",
-      "answer": "Course Outcome CO4 states that on completion of the course, students will be able to integrate the NLP techniques.",
+      "answer": "Course Outcome CO4 states that on completion of the course, a student will be able to integrate the NLP techniques for the information retrieval task.",
       "is_out_of_scope": false,
       "system_was_confident": true,
-      "keyword_match_ratio": 0.5,
+      "keyword_match_ratio": 1.0,
       "matched_keywords": [
-        "Integrate the NLP techniques"
-      ],
-      "missing_keywords": [
+        "Integrate the NLP techniques",
         "information retrieval"
       ],
+      "missing_keywords": [],
       "passed": true
     },
     {
       "id": "q12",
       "question": "Which course codes are included under Lab Practice VI?",
       "category": "specific_detail",
-      "answer": "410252 and 410253.",
+      "answer": "410252, 410253.",
       "is_out_of_scope": false,
       "system_was_confident": true,
       "keyword_match_ratio": 1.0,
@@ -218,7 +217,7 @@
       "id": "q14",
       "question": "How many credit points is the Deep Learning subject worth in the curriculum?",
       "category": "paraphrased",
-      "answer": "The Deep Learning subject (410251) is worth 3 credit points.",
+      "answer": "The course \"Deep Learning\" (410251) is worth 3 credit points.",
       "is_out_of_scope": false,
       "system_was_confident": true,
       "keyword_match_ratio": 0.6666666666666666,
@@ -235,7 +234,7 @@
       "id": "q15",
       "question": "In the language modeling unit, what vector representation and topic modeling approaches are taught to students?",
       "category": "paraphrased",
-      "answer": "Word Embeddings/ Vector Semantics: Bag-of-words, TFIDF, word2vec, doc2vec, Contextualized representations (BERT)\n\nTopic Modelling: Latent Dirichlet Allocation (LDA), Latent Semantic Analysis, Non Negative Matrix Factorization",
+      "answer": "Word Embeddings/ Vector Semantics: Bag-of-words, TFIDF, word2vec, doc2vec, Contextualized representations (BERT) Topic Modelling: Latent Dirichlet Allocation (LDA), Latent Semantic Analysis, Non Negative Matrix Factorization",
       "is_out_of_scope": false,
       "system_was_confident": true,
       "keyword_match_ratio": 0.75,
@@ -253,17 +252,17 @@
       "id": "q16",
       "question": "What choices do students have when selecting their eighth audit course?",
       "category": "paraphrased",
-      "answer": "Students have 8 choices for their eighth audit course:\n\n410252(A) Natural Language Processing\n410252(B) Image Processing\n410252(C) Software Defined Networks\n410252(D) Advanced Digital Signal Processing\n410252(E) Open Elective I\n410253(A) Pattern Recognition\n410253(B) Soft Computing\n410253(C) Business Intelligence\n410253(E) Open Elective II",
+      "answer": "AC8- I Usability Engineering\nAC8- II Conversational Interfaces\nAC8- III Social Media and Analytics\nAC8- IV MOOC- Learn New Skills\nAC8- V Emotional Intelligence",
       "is_out_of_scope": false,
       "system_was_confident": true,
-      "keyword_match_ratio": 0.0,
-      "matched_keywords": [],
-      "missing_keywords": [
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
         "Usability Engineering",
         "Conversational Interfaces",
         "Emotional Intelligence"
       ],
-      "passed": false
+      "missing_keywords": [],
+      "passed": true
     },
     {
       "id": "q17",
@@ -285,7 +284,7 @@
       "id": "q18",
       "question": "What is the total course fee for Semester VIII?",
       "category": "out_of_scope",
-      "answer": "The total course fee for Semester VIII is not explicitly mentioned in the provided context. However, it can be inferred that the credit scheme is as follows:\n\n- Total Credit: 12\n- Examination Scheme and Marks: Not specified\n- Lecture Practical Tutorial Mid-Sem End-Sem Term work Practical Oral/Pre: Not specified\n\nIf we assume that each course has a fixed fee based on its credit value, then the total course fee for Semester VIII would be:\n\nTotal Course Fee = (Credit Value * Fixed Fee per Credit)\n\nUnfortunately, the context does not provide enough information to determine the fixed fee per credit or the total course fee.",
+      "answer": "The total course fee for Semester VIII cannot be determined from the provided context. However, we can find the credit scheme and marks for each course:\n\n- 410250 High Performance Computing: Lecture (30 hours/week), Practical (70 hours/week)\n- 410251 Deep Learning: Lecture (30 hours/week), Practical (70 hours/week)\n- 410252 Elective V: Lecture (30 hours/week), Practical (70 hours/week)\n- 410253 Elective VI: Lecture (30 hours/week), Practical (70 hours/week)\n- 410254 Laboratory Practice V: Tutorial (50 hours/week) and Oral/Pre (50 hours/week)\n- 410255 Laboratory Practice VI: Tutorial (50 hours/week) and Oral/Pre (50 hours/week)\n\nThe total course fee is not explicitly mentioned in the provided context.",
       "is_out_of_scope": true,
       "system_was_confident": true,
       "keyword_match_ratio": 0.0,
