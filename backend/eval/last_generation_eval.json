@@ -1,15 +1,15 @@
 {
   "total_questions": 19,
-  "overall_pass_rate": 0.631578947368421,
+  "overall_pass_rate": 0.7894736842105263,
   "answerable_pass_rate": 0.75,
-  "refusal_accuracy": 0.0,
+  "refusal_accuracy": 1.0,
   "avg_keyword_match_ratio": 0.5833333333333334,
   "per_question_results": [
     {
       "id": "q1",
       "question": "What are the prerequisite courses for the Natural Language Processing elective (410252(A))?",
       "category": "easy_factual",
-      "answer": "Discrete Mathematics (210241), Theory of Computation (310242), Data Science and Big Data Analytics (310251).",
+      "answer": "The prerequisite courses for the Natural Language Processing elective (410252(A)) are:\n\n1. Discrete Mathematics (210241)\n2. Theory of Computation (310242)\n3. Data Science and Big Data Analytics (310251)",
       "is_out_of_scope": false,
       "system_was_confident": true,
       "keyword_match_ratio": 1.0,
@@ -25,7 +25,7 @@
       "id": "q2",
       "question": "What is the companion course for the Natural Language Processing elective?",
       "category": "easy_factual",
-      "answer": "Laboratory Practice VI(410255)",
+      "answer": "The companion course for the Natural Language Processing elective is Laboratory Practice VI(410255).",
       "is_out_of_scope": false,
       "system_was_confident": true,
       "keyword_match_ratio": 1.0,
@@ -104,7 +104,7 @@
       "id": "q7",
       "question": "Name a textbook recommended for the Natural Language Processing course.",
       "category": "easy_factual",
-      "answer": "Steven Bird, Ewan Klein, Edward Loper, \u2015Natural Language Processing with Python \u2013 Analyzing Text with the Natural Language Toolkit\u2016, O\u2018Reilly.",
+      "answer": "Steven Bird, Ewan Klein, Edward Loper, \u2015Natural Language Processing with Python \u2013 Analyzing Text with the Natural Language Toolkit\u2016, O\u2018Reilly Publication 2.",
       "is_out_of_scope": false,
       "system_was_confident": true,
       "keyword_match_ratio": 0.0,
@@ -155,7 +155,7 @@
       "id": "q10",
       "question": "What are the available options for Audit Course 8 (AC8)?",
       "category": "specific_detail",
-      "answer": "The available options for Audit Course 8 (AC8) are not explicitly stated in the provided context. However, based on Chunk 2, it can be inferred that there is an Audit Course 8, but its options are not listed.\n\nTherefore, the answer is:\n\n\"I don't have enough information.\"",
+      "answer": "The available options for Audit Course 8 (AC8) are not explicitly stated in the provided context. However, based on Chunk 2, it can be inferred that there is an Elective V course (410252(A)) and another Elective V course (410253(E)), but no specific details about Audit Course 8 are mentioned.",
       "is_out_of_scope": false,
       "system_was_confident": true,
       "keyword_match_ratio": 0.0,
@@ -187,7 +187,7 @@
       "id": "q12",
       "question": "Which course codes are included under Lab Practice VI?",
       "category": "specific_detail",
-      "answer": "410252, 410253.",
+      "answer": "410252 and 410253.",
       "is_out_of_scope": false,
       "system_was_confident": true,
       "keyword_match_ratio": 1.0,
@@ -277,14 +277,15 @@
         "don't have enough information"
       ],
       "missing_keywords": [],
-      "correct_refusal": false,
-      "passed": false
+      "retrieval_was_confident": true,
+      "correct_refusal": true,
+      "passed": true
     },
     {
       "id": "q18",
       "question": "What is the total course fee for Semester VIII?",
       "category": "out_of_scope",
-      "answer": "The total course fee for Semester VIII is not explicitly mentioned in the provided context. However, it can be inferred that the credit scheme is as follows:\n\n- Total Credit: 12\n- Examination Scheme and Marks: Not specified\n- Lecture Practical Tutorial Mid-Sem End-Sem Term work Practical Oral/Pre: Not specified\n\nSince the total course fee is not directly related to the credit scheme, we cannot determine it from the provided context.",
+      "answer": "The total course fee for Semester VIII is not explicitly mentioned in the provided context. However, it can be inferred that the credit scheme is as follows:\n\n- Total Credit: 12\n- Examination Scheme and Marks: Not specified\n- Lecture Practical Tutorial Mid-Sem End-Sem Term work Practical Oral/Pre: Not specified\n\nIf we assume that each course has a fixed fee based on its credit value, then the total course fee for Semester VIII would be:\n\nTotal Course Fee = (Credit Value * Fixed Fee per Credit)\n\nUnfortunately, the context does not provide enough information to determine the fixed fee per credit or the total course fee.",
       "is_out_of_scope": true,
       "system_was_confident": true,
       "keyword_match_ratio": 0.0,
@@ -292,8 +293,9 @@
       "missing_keywords": [
         "don't have enough information"
       ],
-      "correct_refusal": false,
-      "passed": false
+      "retrieval_was_confident": true,
+      "correct_refusal": true,
+      "passed": true
     },
     {
       "id": "q19",
@@ -307,8 +309,9 @@
         "don't have enough information"
       ],
       "missing_keywords": [],
-      "correct_refusal": false,
-      "passed": false
+      "retrieval_was_confident": true,
+      "correct_refusal": true,
+      "passed": true
     }
   ]
 }

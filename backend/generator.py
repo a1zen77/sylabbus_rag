@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def truncate_context(contexts: list[dict], max_chars_per_chunk: int = 600) -> list[dict]:
+def truncate_context(contexts: list[dict], max_chars_per_chunk: int = 1200) -> list[dict]:
     """Truncate each chunk to save tokens."""
     truncated = []
     for ctx in contexts:
@@ -37,7 +37,7 @@ Answer:"""
 
 def generate_answer(query: str, contexts: list[dict]) -> str:
     """Generate answer using Ollama (non-streaming)."""
-    contexts = truncate_context(contexts, max_chars_per_chunk=600)
+    contexts = truncate_context(contexts, max_chars_per_chunk=1200)
     prompt = build_prompt(query, contexts)
     
     try:
@@ -63,7 +63,7 @@ def generate_answer(query: str, contexts: list[dict]) -> str:
 
 def generate_answer_stream(query: str, contexts: list[dict]):
     """Generate answer using Ollama with streaming."""
-    contexts = truncate_context(contexts, max_chars_per_chunk=600)
+    contexts = truncate_context(contexts, max_chars_per_chunk=1200)
     prompt = build_prompt(query, contexts)
     
     try:
