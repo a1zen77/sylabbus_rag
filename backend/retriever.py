@@ -9,7 +9,10 @@ load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Initialize Chroma
-CHROMA_DIR = os.getenv("CHROMA_PERSIST_DIR", "./chroma_db")
+# Resolve path relative to this file's location, not the current working directory
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CHROMA_DIR = os.path.join(BASE_DIR, os.getenv("CHROMA_PERSIST_DIR", "./chroma_db"))
+
 chroma_client = chromadb.PersistentClient(path=CHROMA_DIR)
 
 # Get the collection
