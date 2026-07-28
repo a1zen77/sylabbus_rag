@@ -3,6 +3,8 @@ import google.generativeai as genai
 import chromadb
 from dotenv import load_dotenv
 
+from hybrid_retriever import hybrid_retrieve
+
 load_dotenv()
 
 # Configure Gemini
@@ -59,6 +61,23 @@ def check_confidence(contexts: list[dict], threshold: float = 0.5) -> bool:
     
     # If distance is greater than threshold, we're not confident
     return best_distance <= threshold
+
+def retrieve_context_hybrid(query: str, top_k: int = 5) -> list[dict]:
+    """
+    Hybrid retrieval (vector + BM25 fused via RRF).
+    Same output shape as retrieve_context() so it's a drop-in replacement.
+    """
+    results = hybrid_retrieve(query, top_k=top_k)
+
+    # Normalize shape to match retrieve_context()'s output
+    contexts = []
+    for r in results:
+        contexts.append({
+            "text": r["text"],
+            "metadata": r["metadata"],
+            "distance": r.get("distance", 1 - r.get("rrf_score", 0))  # approximate for confidence check
+        })
+    return contexts
 
 if __name__ == "__main__":
     test_queries = [
