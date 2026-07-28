@@ -1,0 +1,316 @@
+{
+  "total_questions": 19,
+  "overall_pass_rate": 0.9473684210526315,
+  "answerable_pass_rate": 0.9375,
+  "refusal_accuracy": 1.0,
+  "avg_keyword_match_ratio": 0.8333333333333334,
+  "per_question_results": [
+    {
+      "id": "q1",
+      "question": "What are the prerequisite courses for the Natural Language Processing elective (410252(A))?",
+      "category": "easy_factual",
+      "answer": "Discrete Mathematics (210241), Theory of Computation (310242), Data Science and Big Data Analytics (310251).",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
+        "Discrete Mathematics",
+        "Theory of Computation",
+        "Data Science and Big Data Analytics"
+      ],
+      "missing_keywords": [],
+      "passed": true
+    },
+    {
+      "id": "q2",
+      "question": "What is the companion course for the Natural Language Processing elective?",
+      "category": "easy_factual",
+      "answer": "The companion course for the Natural Language Processing elective is Laboratory Practice VI(410255).",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
+        "Laboratory Practice VI",
+        "410255"
+      ],
+      "missing_keywords": [],
+      "passed": true
+    },
+    {
+      "id": "q3",
+      "question": "How many credits does the Deep Learning course (410251) carry?",
+      "category": "easy_factual",
+      "answer": "The Deep Learning course (410251) carries 3 credits.",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 0.6666666666666666,
+      "matched_keywords": [
+        "Deep Learning",
+        "credit"
+      ],
+      "missing_keywords": [
+        "03"
+      ],
+      "passed": true
+    },
+    {
+      "id": "q4",
+      "question": "What is the course code for the Natural Language Processing elective?",
+      "category": "easy_factual",
+      "answer": "V410252(A)",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 0.5,
+      "matched_keywords": [
+        "410252(A)"
+      ],
+      "missing_keywords": [
+        "Natural Language Processing"
+      ],
+      "passed": true
+    },
+    {
+      "id": "q5",
+      "question": "How many marks are allocated for the End-Sem paper in the NLP course examination scheme?",
+      "category": "easy_factual",
+      "answer": "The End-Sem (Paper) is allocated 70 Marks.",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
+        "70 Marks",
+        "End-Sem"
+      ],
+      "missing_keywords": [],
+      "passed": true
+    },
+    {
+      "id": "q6",
+      "question": "What is the weekly lecture teaching scheme (hours) for the NLP course?",
+      "category": "easy_factual",
+      "answer": "03 Hours/Week.",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 0.5,
+      "matched_keywords": [
+        "03 Hours/Week"
+      ],
+      "missing_keywords": [
+        "TH"
+      ],
+      "passed": true
+    },
+    {
+      "id": "q7",
+      "question": "Name a textbook recommended for the Natural Language Processing course.",
+      "category": "easy_factual",
+      "answer": "Jurafsky, David, and James H. Martin, \u2015Speech and Language Processing: An Introduction to Natural Language Processing\u2016, Computational Linguistics and Speech Recognition\u2016",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
+        "Jurafsky",
+        "Martin",
+        "Speech and Language Processing"
+      ],
+      "missing_keywords": [],
+      "passed": true
+    },
+    {
+      "id": "q8",
+      "question": "What topics are covered under Unit I: Introduction to Natural Language Processing?",
+      "category": "specific_detail",
+      "answer": "Unit I: Introduction to Natural Language Processing covers the following topics:\n\n1. NLP basics\n2. Basics of text processing (Tokenization, Stemming, Lemmatization, Part of Speech Tagging)\n3. Why English is not a regular language\n4. Mapping of Course Outcomes for Unit I (CO1)",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
+        "Tokenization",
+        "Stemming",
+        "Lemmatization",
+        "Part of Speech Tagging"
+      ],
+      "missing_keywords": [],
+      "passed": true
+    },
+    {
+      "id": "q9",
+      "question": "What modeling and embedding techniques are covered in Unit III: Language Modelling?",
+      "category": "specific_detail",
+      "answer": "Probabilistic language modeling, Markov models, Generative models of language, Log-Liner Models, Graph-based Models, N-gram models: Simple n-gram models, Estimation parameters and smoothing.",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 0.25,
+      "matched_keywords": [
+        "N-gram models"
+      ],
+      "missing_keywords": [
+        "word2vec",
+        "BERT",
+        "LDA"
+      ],
+      "passed": false
+    },
+    {
+      "id": "q10",
+      "question": "What are the available options for Audit Course 8 (AC8)?",
+      "category": "specific_detail",
+      "answer": "The available options for Audit Course 8 (AC8) are:\n\n1. Usability Engineering\n2. Conversational Interfaces\n3. Social Media and Analytics\n4. MOOC - Learn New Skills\n5. Emotional Intelligence",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
+        "Usability Engineering",
+        "Conversational Interfaces",
+        "Emotional Intelligence"
+      ],
+      "missing_keywords": [],
+      "passed": true
+    },
+    {
+      "id": "q11",
+      "question": "What does Course Outcome CO4 state for the NLP course?",
+      "category": "specific_detail",
+      "answer": "Course Outcome CO4 states that on completion of the course, a student will be able to integrate the NLP techniques for the information retrieval task.",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
+        "Integrate the NLP techniques",
+        "information retrieval"
+      ],
+      "missing_keywords": [],
+      "passed": true
+    },
+    {
+      "id": "q12",
+      "question": "Which course codes are included under Lab Practice VI?",
+      "category": "specific_detail",
+      "answer": "410252, 410253.",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
+        "410252",
+        "410253"
+      ],
+      "missing_keywords": [],
+      "passed": true
+    },
+    {
+      "id": "q13",
+      "question": "Before enrolling in the Natural Language Processing elective, which subjects must a student have already completed?",
+      "category": "paraphrased",
+      "answer": "Discrete Mathematics (210241), Theory of Computation (310242), and Data Science and Big Data Analytics (310251).",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
+        "Discrete Mathematics",
+        "Theory of Computation",
+        "Data Science and Big Data Analytics"
+      ],
+      "missing_keywords": [],
+      "passed": true
+    },
+    {
+      "id": "q14",
+      "question": "How many credit points is the Deep Learning subject worth in the curriculum?",
+      "category": "paraphrased",
+      "answer": "The course \"Deep Learning\" (410251) is worth 3 credit points.",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 0.6666666666666666,
+      "matched_keywords": [
+        "Deep Learning",
+        "credit"
+      ],
+      "missing_keywords": [
+        "03"
+      ],
+      "passed": true
+    },
+    {
+      "id": "q15",
+      "question": "In the language modeling unit, what vector representation and topic modeling approaches are taught to students?",
+      "category": "paraphrased",
+      "answer": "Word Embeddings/ Vector Semantics: Bag-of-words, TFIDF, word2vec, doc2vec, Contextualized representations (BERT) Topic Modelling: Latent Dirichlet Allocation (LDA), Latent Semantic Analysis, Non Negative Matrix Factorization",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 0.75,
+      "matched_keywords": [
+        "word2vec",
+        "BERT",
+        "LDA"
+      ],
+      "missing_keywords": [
+        "N-gram models"
+      ],
+      "passed": true
+    },
+    {
+      "id": "q16",
+      "question": "What choices do students have when selecting their eighth audit course?",
+      "category": "paraphrased",
+      "answer": "AC8- I Usability Engineering\nAC8- II Conversational Interfaces\nAC8- III Social Media and Analytics\nAC8- IV MOOC- Learn New Skills\nAC8- V Emotional Intelligence",
+      "is_out_of_scope": false,
+      "system_was_confident": true,
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
+        "Usability Engineering",
+        "Conversational Interfaces",
+        "Emotional Intelligence"
+      ],
+      "missing_keywords": [],
+      "passed": true
+    },
+    {
+      "id": "q17",
+      "question": "Who is the faculty member assigned to teach the NLP elective course?",
+      "category": "out_of_scope",
+      "answer": "I don't have enough information.",
+      "is_out_of_scope": true,
+      "system_was_confident": true,
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
+        "don't have enough information"
+      ],
+      "missing_keywords": [],
+      "retrieval_was_confident": true,
+      "correct_refusal": true,
+      "passed": true
+    },
+    {
+      "id": "q18",
+      "question": "What is the total course fee for Semester VIII?",
+      "category": "out_of_scope",
+      "answer": "The total course fee for Semester VIII cannot be determined from the provided context. However, we can find the credit scheme and marks for each course:\n\n- 410250 High Performance Computing: Lecture (30 hours/week), Practical (70 hours/week)\n- 410251 Deep Learning: Lecture (30 hours/week), Practical (70 hours/week)\n- 410252 Elective V: Lecture (30 hours/week), Practical (70 hours/week)\n- 410253 Elective VI: Lecture (30 hours/week), Practical (70 hours/week)\n- 410254 Laboratory Practice V: Tutorial (50 hours/week) and Oral/Pre (50 hours/week)\n- 410255 Laboratory Practice VI: Tutorial (50 hours/week) and Oral/Pre (50 hours/week)\n\nThe total course fee is not explicitly mentioned in the provided context.",
+      "is_out_of_scope": true,
+      "system_was_confident": true,
+      "keyword_match_ratio": 0.0,
+      "matched_keywords": [],
+      "missing_keywords": [
+        "don't have enough information"
+      ],
+      "retrieval_was_confident": true,
+      "correct_refusal": true,
+      "passed": true
+    },
+    {
+      "id": "q19",
+      "question": "On what date is the mid-semester examination for the NLP course scheduled?",
+      "category": "out_of_scope",
+      "answer": "I don't have enough information.",
+      "is_out_of_scope": true,
+      "system_was_confident": true,
+      "keyword_match_ratio": 1.0,
+      "matched_keywords": [
+        "don't have enough information"
+      ],
+      "missing_keywords": [],
+      "retrieval_was_confident": true,
+      "correct_refusal": true,
+      "passed": true
+    }
+  ]
+}
