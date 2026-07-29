@@ -4,6 +4,7 @@ import chromadb
 from dotenv import load_dotenv
 
 from hybrid_retriever import hybrid_retrieve
+from reranker import rerank
 
 load_dotenv()
 
@@ -69,13 +70,36 @@ def retrieve_context_hybrid(query: str, top_k: int = 5) -> list[dict]:
     """
     results = hybrid_retrieve(query, top_k=top_k)
 
-    # Normalize shape to match retrieve_context()'s output
     contexts = []
     for r in results:
         contexts.append({
             "text": r["text"],
             "metadata": r["metadata"],
-            "distance": r.get("distance", 1 - r.get("rrf_score", 0))  # approximate for confidence check
+            "distance": r.get("distance", 1 - r.get("rrf_score", 0))
+        })
+    return contexts
+
+
+def retrieve_context_reranked(query: str, top_k: int = 5, candidate_pool: int = 15) -> list[dict]:
+    """
+    Full pipeline: hybrid retrieval for a wide candidate pool,
+    then cross-encoder reranking down to top_k.
+    """
+    # Get a larger pool from hybrid search first (retrieval stage)
+    candidates = hybrid_retrieve(query, top_k=candidate_pool)
+
+    # Rerank the pool down to top_k (reranking stage)
+    reranked = rerank(query, candidates, top_k=top_k)
+
+    contexts = []
+    for r in reranked:
+        contexts.append({
+            "text": r["text"],
+            "metadata": r["metadata"],
+            # Use rerank_score as the "distance" placeholder — same caveat as before,
+            # this is NOT a real distance, just reusing the field name for now.
+            "distance": 1 - r.get("rerank_score", 0),
+            "rerank_score": r.get("rerank_score")
         })
     return contexts
 
