@@ -1,0 +1,24 @@
+Loading cross-encoder model: cross-encoder/ms-marco-MiniLM-L-6-v2...
+Cross-encoder loaded.
+============================================================
+RERANKED RETRIEVAL EVALUATION REPORT (top_k=5)
+============================================================
+Recall@5: 100.00%
+MRR: 0.969
+
+[✅ HIT] What are the prerequisite courses for the Natural ... (rank=1)
+[✅ HIT] What is the companion course for the Natural Langu... (rank=1)
+[✅ HIT] How many credits does the Deep Learning course (41... (rank=1)
+[✅ HIT] What is the course code for the Natural Language P... (rank=1)
+[✅ HIT] How many marks are allocated for the End-Sem paper... (rank=1)
+[✅ HIT] What is the weekly lecture teaching scheme (hours)... (rank=1)
+[✅ HIT] Name a textbook recommended for the Natural Langua... (rank=2)
+[✅ HIT] What topics are covered under Unit I: Introduction... (rank=1)
+[✅ HIT] What modeling and embedding techniques are covered... (rank=1)
+[✅ HIT] What are the available options for Audit Course 8 ... (rank=1)
+[✅ HIT] What does Course Outcome CO4 state for the NLP cou... (rank=1)
+[✅ HIT] Which course codes are included under Lab Practice... (rank=1)
+[✅ HIT] Before enrolling in the Natural Language Processin... (rank=1)
+[✅ HIT] How many credit points is the Deep Learning subjec... (rank=1)
+[✅ HIT] In the language modeling unit, what vector represe... (rank=1)
+[✅ HIT] What choices do students have when selecting their... (rank=1)
