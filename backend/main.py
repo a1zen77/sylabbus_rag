@@ -10,6 +10,7 @@ import json
 from ingestor import ingest_pdf
 from retriever import retrieve_context, check_confidence  # ← Import check_confidence
 from generator import generate_answer, generate_answer_stream
+from extractor import extract_course_info
 
 load_dotenv()
 
@@ -32,6 +33,9 @@ class ChatResponse(BaseModel):
     sources: list[dict]
     confident: bool  # ← NEW: Indicate if we're confident
 
+class ExtractRequest(BaseModel):
+    course_query: str
+
 @app.get("/")
 async def root():
     return {
@@ -39,7 +43,10 @@ async def root():
         "endpoints": {
             "POST /ingest": "Upload and ingest a PDF",
             "POST /chat": "Ask a question and get an answer",
-            "POST /chat/stream": "Ask a question and stream the answer"
+            "POST /chat/stream": "Ask a question and stream the answer",
+            "GET /documents": "List all indexed documents",
+            "DELETE /documents/{filename}": "Delete a document from the index",
+            "POST /extract": "Extract structured course info (credits, exam pattern)"
         }
     }
 
@@ -165,6 +172,25 @@ async def chat_stream(request: ChatRequest):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing question: {str(e)}")
+
+@app.post("/extract")
+async def extract_course(request: ExtractRequest):
+    """Extract structured course information (credits, exam pattern, etc.) as JSON."""
+    try:
+        result = extract_course_info(request.course_query, top_k=7)
+        
+        if not result["success"]:
+            raise HTTPException(
+                status_code=422,
+                detail=result["error"] or "Extraction failed"
+            )
+        
+        return result
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error during extraction: {str(e)}")
 
 if __name__ == "__main__":
     import uvicorn

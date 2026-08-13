@@ -97,8 +97,20 @@ def clean_json_response(raw_text: str) -> str:
     return text[start:]
 
 
-def extract_course_info(course_query: str, top_k: int = 5, max_retries: int = 2) -> dict:
-    contexts = retrieve_context(course_query, top_k=top_k)
+def extract_course_info(course_query: str, top_k: int = 7, max_retries: int = 2) -> dict:
+    # Augment the user's course query with fixed terms describing what we actually
+    # need to retrieve — teaching scheme / credits / exam pattern — so retrieval
+    # targets the right table regardless of how vaguely the user phrases their input.
+    retrieval_query = (
+        f"{course_query} teaching scheme lecture practical tutorial hours "
+        f"credits examination scheme ISE ESE term work marks"
+    )
+    
+    contexts = retrieve_context(retrieval_query, top_k=top_k)
+
+    print(f"\n--- Retrieved {len(contexts)} chunks for extraction ---")
+    for i, ctx in enumerate(contexts, 1):
+        print(f"[{i}] Page {ctx['metadata']['page_number']} (distance={ctx['distance']:.3f}): {ctx['text'][:100]}...")
 
     if not contexts:
         return {"success": False, "error": "No relevant context found.", "data": None}
