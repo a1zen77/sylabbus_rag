@@ -3,8 +3,8 @@ from typing import Optional
 
 
 class CourseExtractionResult(BaseModel):
-    course_code: Optional[str] = Field(default=None, description="Course code, e.g. 410252")
-    course_name: Optional[str] = Field(default=None, description="Full course name")
+    course_code: Optional[str] = Field(default=None)
+    course_name: Optional[str] = Field(default=None)
 
     lecture_hours_per_week: Optional[float] = Field(default=None)
     practical_hours_per_week: Optional[float] = Field(default=None)
