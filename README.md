@@ -1,14 +1,14 @@
 # SPPU Syllabus QA — Local RAG System
 
-A fully local, retrieval-augmented question-answering system for university syllabus PDFs. Upload a syllabus, ask natural-language questions, get cited answers — with no external LLM APIs, no cloud vector database, and no per-query cost.
+A fully local, retrieval-augmented question-answering system for Pune University syllabus PDFs. Upload a syllabus, ask natural-language questions, get cited answers — with no external LLM APIs, no cloud vector database, and no per-query cost.
 
-Built as a hands-on exploration of production RAG concerns: retrieval quality measurement, hybrid search, reranking, structured extraction, and honest evaluation of what actually works.
+I built this to explore and understand production RAG systems: retrieval quality measurement, hybrid search, reranking, structured extraction, and honest evaluation of what actually works.
 
 ---
 
 ## Overview
 
-Most RAG tutorials stop at "upload a PDF, ask a question, get an answer." This project goes a step further: it treats retrieval and generation as things that need to be **measured**, not just built. The core of the project isn't the chat UI — it's the evaluation harness that quantifies whether each technique (hybrid search, reranking, confidence thresholding) actually improves the system, rather than assuming it does.
+Most RAG tutorials and blogs I came across stop at "upload a PDF, ask a question, get an answer." This project goes a step further: it treats retrieval and generation as things that need to be **measured**, not just built. The core of the project isn't the chat UI — it's the evaluation harness that analyzes whether each technique (hybrid search, reranking, confidence thresholding) actually improves the system, rather than assuming it does.
 
 Everything runs locally: embeddings via Gemini's API (free tier) for ingestion/retrieval, and **Ollama** running `llama3.2:3b` (chat) and `qwen2.5:7b-instruct` (structured extraction) for generation — no OpenAI/Anthropic API dependency for the generation step, and no rate limits during development.
 
