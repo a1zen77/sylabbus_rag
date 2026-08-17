@@ -44,38 +44,38 @@ Everything runs locally: embeddings via Gemini's API (free tier) for ingestion/r
 
 ```
 ┌─────────────┐     ┌──────────────┐     ┌─────────────────┐
-│  PDF Upload │────▶│  Ingestion   │────▶│    ChromaDB      │
-│             │     │  (PyMuPDF +  │     │  (vector store,  │
-│             │     │   chunking)  │     │   page-tracked)  │
+│  PDF Upload │────▶│  Ingestion   │────▶│    ChromaDB     │
+│             │     │  (PyMuPDF +  │     │  (vector store, │
+│             │     │   chunking)  │     │   page-tracked) │
 └─────────────┘     └──────────────┘     └─────────────────┘
                                                    │
 User Question                                     ▼
       │                              ┌────────────────────────┐
-      ▼                              │   Retrieval Pipeline    │
+      ▼                              │   Retrieval Pipeline   │
 ┌─────────────┐                      │  ┌──────────────────┐  │
-│  FastAPI    │─────────────────────▶│  │  Vector Search    │  │
-│  /chat      │                      │  │  (dense, cosine)  │  │
+│  FastAPI    │─────────────────────▶│  │  Vector Search   │  │
+│  /chat      │                      │  │  (dense, cosine) │  │
 │  /extract   │                      │  └──────────────────┘  │
 └─────────────┘                      │  ┌──────────────────┐  │
-      │                              │  │  BM25 (sparse)    │  │
+      │                              │  │  BM25 (sparse)   │  │
       │                              │  └──────────────────┘  │
-      │                              │           │             │
-      │                              │  Reciprocal Rank Fusion │
-      │                              │           │             │
-      │                              │  Cross-Encoder Rerank   │
+      │                              │           │            │
+      │                              │  Reciprocal Rank Fusion│
+      │                              │           │            │
+      │                              │  Cross-Encoder Rerank  │
       │                              └────────────────────────┘
       │                                          │
       ▼                                          ▼
 ┌─────────────┐                      ┌─────────────────────┐
-│  Confidence  │◀─────────────────── │   Top-K Chunks +     │
-│  Thresholding│                      │   Metadata (page,    │
-└─────────────┘                      │   filename, score)   │
+│  Confidence │◀───────────────────  │   Top-K Chunks +    │
+│ Thresholding│                      │   Metadata (page,   │
+└─────────────┘                      │   filename, score)  │
       │                              └─────────────────────┘
       ▼
 ┌─────────────┐
-│   Ollama     │  (llama3.2:3b for chat,
-│   Generation │   qwen2.5:7b-instruct for
-│              │   structured extraction)
+│   Ollama    │  (llama3.2:3b for chat,
+│   Generation│   qwen2.5:7b-instruct for
+│             │   structured extraction)
 └─────────────┘
       │
       ▼
