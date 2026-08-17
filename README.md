@@ -161,8 +161,8 @@ Documented honestly, not hidden:
 ### Installation
 
 ```bash
-git clone <repo-url>
-cd sppu-rag
+git clone https://github.com/a1zen77/sylabbus_rag
+cd sylabbus-rag
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 
