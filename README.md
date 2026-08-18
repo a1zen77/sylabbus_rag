@@ -42,45 +42,7 @@ Everything runs locally: embeddings via Gemini's API (free tier) for ingestion/r
 
 ## Architecture
 
-```
-┌─────────────┐     ┌──────────────┐     ┌─────────────────┐
-│  PDF Upload │────▶│  Ingestion   │────▶│    ChromaDB     │
-│             │     │  (PyMuPDF +  │     │  (vector store, │
-│             │     │   chunking)  │     │   page-tracked) │
-└─────────────┘     └──────────────┘     └─────────────────┘
-                                                   │
-User Question                                     ▼
-      │                              ┌────────────────────────┐
-      ▼                              │   Retrieval Pipeline   │
-┌─────────────┐                      │  ┌──────────────────┐  │
-│  FastAPI    │─────────────────────▶│  │  Vector Search   │  │
-│  /chat      │                      │  │  (dense, cosine) │  │
-│  /extract   │                      │  └──────────────────┘  │
-└─────────────┘                      │  ┌──────────────────┐  │
-      │                              │  │  BM25 (sparse)   │  │
-      │                              │  └──────────────────┘  │
-      │                              │           │            │
-      │                              │  Reciprocal Rank Fusion│
-      │                              │           │            │
-      │                              │  Cross-Encoder Rerank  │
-      │                              └────────────────────────┘
-      │                                          │
-      ▼                                          ▼
-┌─────────────┐                      ┌─────────────────────┐
-│  Confidence │◀───────────────────  │   Top-K Chunks +    │
-│ Thresholding│                      │   Metadata (page,   │
-└─────────────┘                      │   filename, score)  │
-      │                              └─────────────────────┘
-      ▼
-┌─────────────┐
-│   Ollama    │  (llama3.2:3b for chat,
-│   Generation│   qwen2.5:7b-instruct for
-│             │   structured extraction)
-└─────────────┘
-      │
-      ▼
-Answer + Citations (Streamlit UI)
-```
+   ![Architecture Diagram](assets/architecture_rag.png)
 
 **Pipeline stages:**
 1. **Ingestion**: PDF → page-tracked text extraction (PyMuPDF) → fixed-size chunking → Gemini embeddings → ChromaDB (with filename, page number, chunk index metadata)
