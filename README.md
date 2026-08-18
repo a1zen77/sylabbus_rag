@@ -4,6 +4,8 @@ A fully local, retrieval-augmented question-answering system for Pune University
 
 I built this to explore and understand production RAG systems: retrieval quality measurement, hybrid search, reranking, structured extraction, and honest evaluation of what actually works.
 
+All the documents that I used for this project can be found at [sources](https://www.unipune.ac.in/university_files/syllabi.htm)   
+
 ---
 
 ## Overview
